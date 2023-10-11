@@ -28,13 +28,17 @@ class StateProviderScreen extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => _NextScreen())
-                );
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => _NextScreen()));
               },
               child: Text('Next Screen'),
             ),
-
+            ElevatedButton(
+              onPressed: () {
+                int state = ref.read(numberProvider.notifier).state;
+                ref.read(numberProvider.notifier).state = state - 1;
+              },
+              child: Text('Down'),
+            ),
           ],
         ),
       ),
@@ -72,5 +76,5 @@ class _NextScreen extends ConsumerWidget {
   }
 }
 
-
 // ★동일한 프로바이더만 watch하고 있다면 간단하게 어디서든 서로 데이터를 넘겨줄 필요없이 같은 프로바이더를 불러옴으로써 공유할 수 있다.
+// 값을 바꾸고 싶을때는 프로바이더이름 뒤에 notifier를 붙인다.
