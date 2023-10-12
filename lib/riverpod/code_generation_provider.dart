@@ -58,3 +58,22 @@ final _testFamilyProvider = Provider.family<int, Parameter>(
   (ref, Parameter) => Parameter.number1 * Parameter.number2,
 );
  */
+
+// _$ 하고 클래스 이름을 붙이면 된다.
+@riverpod
+class GStateNotifier extends _$GStateNotifier {
+  //초기상태지정
+  // return 0 ? -> 기본 상태값이 0으로 시작한다는 것을 의미. 기억이 안나면 StateNotifierProvider 보고 올것!
+  @override
+  int build() {
+    return 0;
+  }
+
+  increment() {
+    state++;
+  }
+
+  decrement() {
+    state--;
+  }
+}
