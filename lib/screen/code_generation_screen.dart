@@ -8,13 +8,39 @@ class CodeGenerationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // normal state
     final state1 = ref.watch(gStateProvider);
+    //future state
+    final state2 = ref.watch(gStateFutureProvider);
+    // future state ( not autoDispose)
+    final state3 = ref.watch(gStateFuture2Provider);
 
     return DefaultLayout(
       title: 'Code GenerationScreen',
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('state : $state1'),
+          Text('state1 : $state1'),
+          state2.when(
+            data: (data) {
+              return Text(
+                'state2 : $data',
+                textAlign: TextAlign.center,
+              );
+            }, // -> 로딩이 끝나가지고  데이터가 있을 떄 그때 실행되는 함수.
+            error: (err, stack) => Text(err.toString()), // -> 에러가 났을 때 실행되는 함수.
+            loading: () => Center(child: CircularProgressIndicator()), // -> 로딩중일 때 실행되는 함수들.
+          ),
+          state3.when(
+            data: (data) {
+              return Text(
+                'state2 : $data',
+                textAlign: TextAlign.center,
+              );
+            }, // -> 로딩이 끝나가지고  데이터가 있을 떄 그때 실행되는 함수.
+            error: (err, stack) => Text(err.toString()), // -> 에러가 났을 때 실행되는 함수.
+            loading: () => Center(child: CircularProgressIndicator()), // -> 로딩중일 때 실행되는 함수들.
+          ),
         ],
       ),
     );
