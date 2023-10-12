@@ -20,7 +20,6 @@ class CodeGenerationScreen extends ConsumerWidget {
       number2: 20,
     ));
     // state notifier
-    final state5 = ref.watch(gStateNotifierProvider);
 
     return DefaultLayout(
       title: 'Code GenerationScreen',
@@ -49,7 +48,18 @@ class CodeGenerationScreen extends ConsumerWidget {
             loading: () => Center(child: CircularProgressIndicator()), // -> 로딩중일 때 실행되는 함수들.
           ),
           Text('State4 : $state4'),
-          Text('State5 : $state5'),
+          Consumer(
+            // 1.context = buildContext, ref = ref,
+            // 2. child는 새로 렌더링을 하는 요소가 부분적이고, 단 한번만 렌더링 시키고 변경사항이 딱히 필요가 없는 그런 위젯들(고정적인 값)을 child파라미터에 넘겨준다.
+            builder: (context, ref, child) {
+              print('builder build!');
+              final state5 = ref.watch(gStateNotifierProvider);
+              return Row(
+                children: [Text('state5 : $state5'), child!],
+              );
+            },
+            child: Text('hello'),
+          ),
           Row(
             children: [
               ElevatedButton(
@@ -72,5 +82,16 @@ class CodeGenerationScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class _StateFiveWidget extends ConsumerWidget {
+  const _StateFiveWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state5 = ref.watch(gStateNotifierProvider);
+
+    return Text('State5 : $state5');
   }
 }
