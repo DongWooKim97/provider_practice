@@ -14,6 +14,11 @@ class CodeGenerationScreen extends ConsumerWidget {
     final state2 = ref.watch(gStateFutureProvider);
     // future state ( not autoDispose)
     final state3 = ref.watch(gStateFuture2Provider);
+    // family state
+    final state4 = ref.watch(gStateMultiplyProvider(
+      number1: 10,
+      number2: 20,
+    ));
 
     return DefaultLayout(
       title: 'Code GenerationScreen',
@@ -34,13 +39,14 @@ class CodeGenerationScreen extends ConsumerWidget {
           state3.when(
             data: (data) {
               return Text(
-                'state2 : $data',
+                'state3 : $data',
                 textAlign: TextAlign.center,
               );
             }, // -> 로딩이 끝나가지고  데이터가 있을 떄 그때 실행되는 함수.
             error: (err, stack) => Text(err.toString()), // -> 에러가 났을 때 실행되는 함수.
             loading: () => Center(child: CircularProgressIndicator()), // -> 로딩중일 때 실행되는 함수들.
           ),
+          Text('State4 : $state4'),
         ],
       ),
     );

@@ -28,9 +28,33 @@ Future<int> gStateFuture2(GStateFuture2Ref ref) async {
   return 10;
 }
 
-
 // async로도 값을 반환할 수 있다.
 
 // 2) Parameter -> Family 파라미터를 일반 함수처럼 사용할 수 있도록
-// ----------------------------
-// 이러한 문제를 해결하도록 riverpod에 추가가됨. {
+@riverpod
+int gStateMultiply(
+  GStateMultiplyRef ref, {
+  required int number1,
+  required int number2,
+}) {
+  return number1 * number2;
+}
+
+// 아래에 있는 코드와 위에 있는 코드는 동일한 방식이다.
+// 기존의 방식처럼 family를 사용하던 방식에서, 그냥 함수에 파라미터를 넘겨주는 것 만으로도 family형식의 provider를 사용할 수 있다.
+
+/*
+class Parameter {
+  final int number1;
+  final int number2;
+
+  Parameter({
+    required this.number1,
+    required this.number2,
+  });
+}
+
+final _testFamilyProvider = Provider.family<int, Parameter>(
+  (ref, Parameter) => Parameter.number1 * Parameter.number2,
+);
+ */
